@@ -34,4 +34,5 @@ public class Inicio {
     private void registrarse(){
         Registrarse registrarse = new Registrarse();
     }
+
 }
