@@ -8,6 +8,7 @@ public class Registrarse {
 
     private String nombre;
     private String password;
+    private int idUsuario;
 
     Registrarse(){
         System.out.println("Ingresa un usuario");
@@ -316,11 +317,18 @@ public class Registrarse {
         this.rs = this.conexionPostgresql.getRs();
         //Guardo el dato si hay una existencia para despues comprobar
         String usuarioCreado = "";
+        int idUsuarioCreado = 0;
         while (this.rs.next()){
             usuarioCreado = this.rs.getString("usuario");
+            idUsuarioCreado = this.rs.getInt("idUsuario");
         }
+        //Le doy valor al id del Usuario
+        this.idUsuario = idUsuarioCreado;
+        //Le creo un carrito de compras al usuario
+        this.conexionPostgresql = new ConexionPostgresql("INSERT INTO carrito(idCarrito,idUsuario) VALUES("+idUsuarioCreado+ ","+ idUsuarioCreado+");");
+        //Le comento que su cuenta ya fue creada
         System.out.println("Se a registrado: "+ usuarioCreado);
-        Cuenta cuenta = new Cuenta(this.nombre,this.password);
+        Cuenta cuenta = new Cuenta(this.nombre,this.password,this.idUsuario);
     }
     private void regresar(){
         System.out.println("¿Te gustaria ir al inicio nuevamente?(S/N)");

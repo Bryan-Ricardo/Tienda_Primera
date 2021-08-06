@@ -9,19 +9,21 @@ public class Productos {
 
     private String nombre = "";
     private String password = "";
+    int idUsuario = 0;
     private int longitudBD = 0;
 
-    Productos(String usuario, String password){
+    Productos(String usuario, String password,int idUsuario){
         try {
             //llenare la longitud de la base de datos
             this.longitudBD = this.asignarLongitudBD();
-            this.categorias(usuario,password);
+            this.categorias(usuario,password,idUsuario);
         }catch (Exception e){
             System.out.println("Error: " + e.getMessage());
         }
     }
 
-    private void categorias(String nombre, String password) throws Exception{
+    private void categorias(String nombre, String password,int idUsuario) throws Exception{
+
         this.nombre = nombre;
         this.password = password;
         //EMpiezo creando unas series de preguntas para el usuario
@@ -270,10 +272,10 @@ public class Productos {
                 };
                 break;
             case 2:
-                this.categorias(this.nombre,this.password);
+                this.categorias(this.nombre,this.password,this.idUsuario);
                 break;
             case 3:
-                Cuenta cuenta = new Cuenta(this.nombre,this.password);
+                Cuenta cuenta = new Cuenta(this.nombre,this.password,this.idUsuario);
                 break;
             case 4:
                 //Aqui vendra le instancia hacia una funcion que agregara el producto al carrito y mas

@@ -8,6 +8,7 @@ public class IniciarSecion {
 
     private String nombre;
     private String password;
+    private int idUsuario;
 
     IniciarSecion(){
         try {
@@ -31,13 +32,16 @@ public class IniciarSecion {
             this.rs = this.conexionPostgresql.getRs();
             //Aqui se comprobara si la contraseña oicide con el usuario ingresado
             String passwordExistente = "";
+            int idUsuarioExistente = 0;
             while (this.rs.next()){
                 passwordExistente = this.rs.getString("contrasena");
+                idUsuarioExistente = this.rs.getInt("idUsuario");
             }
             //Verifico si coloco la contraseña correca
             if (passwordExistente.equals(this.password)){
+                this.idUsuario = idUsuarioExistente;
                 System.out.println("Ingresaste a tu cuenta");
-                Cuenta cuenta = new Cuenta(this.nombre,this.password);
+                Cuenta cuenta = new Cuenta(this.nombre,this.password,this.idUsuario);
             }else if (!passwordExistente.equals(this.password)){
                 while (!passwordExistente.equals(this.password)){
                     System.out.println("La contraseña es incorreca");
@@ -50,11 +54,13 @@ public class IniciarSecion {
                     //Aqui se comprobara si la contraseña oicide con el usuario ingresado
                     while (this.rs.next()){
                         passwordExistente = this.rs.getString("contrasena");
+                        idUsuarioExistente = this.rs.getInt("idUsuario");
                     }
                     //Verifico si coloco la contraseña correcta
                     if (passwordExistente.equals(this.password)){
+                        this.idUsuario = idUsuarioExistente;
                         //System.out.println("Ingresaste a tu cuenta");
-                        Cuenta cuenta = new Cuenta(this.nombre,this.password);
+                        Cuenta cuenta = new Cuenta(this.nombre,this.password,this.idUsuario);
                     }
                 }
             }
@@ -81,13 +87,16 @@ public class IniciarSecion {
                     this.rs = this.conexionPostgresql.getRs();
                     //Aqui se comprobara si la contraseña oicide con el usuario ingresado
                     String passwordExistente = "";
+                    int idUsuarioExistente = 0;
                     while (this.rs.next()){
                         passwordExistente = this.rs.getString("contrasena");
+                        idUsuarioExistente = this.rs.getInt("idUsuario");
                     }
                     //Verifico si coloco la contraseña correca
                     if (passwordExistente.equals(this.password)){
                         //System.out.println("Ingresaste a tu cuenta");
-                        Cuenta cuenta = new Cuenta(this.nombre,this.password);
+                        this.idUsuario = idUsuarioExistente;
+                        Cuenta cuenta = new Cuenta(this.nombre,this.password,this.idUsuario);
                     }else if (!passwordExistente.equals(this.password)){
                         while (!passwordExistente.equals(this.password)){
                             System.out.println("La contraseña es incorrecta");
@@ -100,11 +109,13 @@ public class IniciarSecion {
                             //Aqui se comprobara si la contraseña oicide con el usuario ingresado
                             while (this.rs.next()){
                                 passwordExistente = this.rs.getString("contrasena");
+                                idUsuarioExistente = this.rs.getInt("idUsuario");
                             }
                             //Verifico si coloco la contraseña correcta
                             if (passwordExistente.equals(this.password)){
                                 //System.out.println("Ingresaste a tu cuenta");
-                                Cuenta cuenta = new Cuenta(this.nombre,this.password);
+                                this.idUsuario = idUsuarioExistente;
+                                Cuenta cuenta = new Cuenta(this.nombre,this.password,idUsuarioExistente);
                             }
                         }
                     }
