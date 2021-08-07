@@ -26,6 +26,7 @@ public class Productos {
 
         this.nombre = nombre;
         this.password = password;
+        this.idUsuario = idUsuario;
         //EMpiezo creando unas series de preguntas para el usuario
         System.out.println("Bienvenido al almacen, ¿En que categoria esta el producto que buscas?");
         System.out.println("1-Alimentos\n2-Utencilios Higienicos\n3-Utensilios Varios\n4-Bebidas");
@@ -252,12 +253,48 @@ public class Productos {
         this.acciones(eleccion);
     }
 
+    private void agregarCarrito(int eleccion)throws Exception{
+        System.out.println("¡Muy bien agregemos un producto a tu carrito!");
+        System.out.println("Ingresa porfavor el id del prooducto que quieres agregar");
+        int idProductoAgregar = this.usuario.nextInt();
+        //Busco si el id que ingreso es correcto
+        this.conexionPostgresql = new ConexionPostgresql("SELECT * FROM almacen WHERE idProducto = "+ idProductoAgregar + ";");
+        this.rs = this.conexionPostgresql.getRs();
+        int idProductoExistente = 0;
+        String tipo = "";
+        String nombreProducto = "";
+        int precio = 0;
+        while (this.rs.next()) {
+            idProductoExistente = this.rs.getInt("idProducto");
+            tipo = this.rs.getString("tipo");
+            nombreProducto = this.rs.getString("nombreProducto");
+            precio = this.rs.getInt("precio");
+        }
+        if (idProductoAgregar!=0){
+            //Preginunto si el siguiente producto es el que selecciono
+            System.out.println("El siguiente producto es el que quieres agregar: (S)");
+            System.out.println("--------\nId: " + idProductoExistente + "\nTipo: "+ tipo + "\nNombre del producto: " +nombreProducto + "\nPrecio: "+ precio+ "\n--------");
+            String confirmarProductoAgregar = this.usuario.next();
+            if (confirmarProductoAgregar.equalsIgnoreCase("S") || confirmarProductoAgregar.equalsIgnoreCase("SI")){
+                //Agrego el producto a su carrito
+                this.conexionPostgresql = new ConexionPostgresql("INSERT INTO productoSeleccionado(idProducto,idCarrito)  VALUES("+ idProductoExistente + ","+this.idUsuario + ");");
+                System.out.println("PRODUCTO AGREGADO");
+                this.acciones(eleccion);
+            }else{
+                this.acciones(eleccion);
+            }
+        }else if (idProductoAgregar==0){
+            System.out.println("¿El id que ingresastes no existe en la base de datos");
+            this.acciones(eleccion);
+        }
+    }
+
     private void acciones(int categoria)throws Exception{
         System.out.println("¿Que quieres hacer ahora?");
         System.out.println("1-Volver a ver los productos");
         System.out.println("2-Volver a ver las categorias de los productos");
         System.out.println("3-Ir a mi cuenta ");
-        System.out.println("4-Ingresar el id de un producto para agregarlo al carrito");
+        System.out.println("4-Agregar un producto al carrito");
         int accion = this.usuario.nextInt();
         switch (accion){
             case 1:
@@ -278,7 +315,7 @@ public class Productos {
                 Cuenta cuenta = new Cuenta(this.nombre,this.password,this.idUsuario);
                 break;
             case 4:
-                //Aqui vendra le instancia hacia una funcion que agregara el producto al carrito y mas
+                this.agregarCarrito(categoria);
         }
     }
 }

@@ -54,7 +54,7 @@ public class CarritoCompras {
         }else if (eleccion == 3){
             //Facturar los productos
             this.facturar();
-        }else if (eleccion == 3){
+        }else if (eleccion == 4){
             //Regresar a tu cuenta
             Cuenta cuenta = new Cuenta(this.nombre,this.password,this.idUsuario);
         }
@@ -111,9 +111,9 @@ public class CarritoCompras {
                 System.out.println("Producto:\n{"+ "\nid:" +idProductosUsuario[cantidadProductos] +"\nTipo:"+tipoProductosUsuario[cantidadProductos] + "\nNombre del producto:" + nombreProductosUsuario[cantidadProductos]+"\nPrecio:" + precioProductosUsuario[cantidadProductos] + "\n}");
                 cantidadProductos++;
             }
-            if (cantidadProductos == 0){
-                System.out.println("No tienes productos en tu carrito");
-            }
+        }
+        if (cantidadProductos == 0){
+            System.out.println("No tienes productos en tu carrito");
         }
     }
 
