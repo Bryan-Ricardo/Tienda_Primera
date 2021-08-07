@@ -205,7 +205,7 @@ public class CarritoCompras {
             String pagado = this.usuario.next();
             System.out.println("PAGADO");
             Cuenta cuenta = new Cuenta(this.nombre,this.password,this.idUsuario);
-            //EN ESTA PARTE COLOCARE LA SERESA DEL PASTEL QUE SERA QUE SE BORRARAN LOS PRODUCTOS DEL CARRITO COMO SI LOS HUBIERA PAGADO
+            this.conexionPostgresql = new ConexionPostgresql("DELETE FROM productoSeleccionado WHERE idCarrito=" + this.idUsuario + ";");//EN ESTA PARTE COLOCARE LA SERESA DEL PASTEL QUE SERA QUE SE BORRARAN LOS PRODUCTOS DEL CARRITO COMO SI LOS HUBIERA PAGADO
         }else{
             this.opciones();
         }

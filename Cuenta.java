@@ -20,6 +20,7 @@ public class Cuenta {
         }else if (eleccion ==2){
             CarritoCompras carritoCompras = new CarritoCompras(this.nombre,this.password,idUsuario);
         }else if (eleccion == 3){
+            ConfigurarCuenta configurarCuenta = new ConfigurarCuenta(this.nombre,this.password,this.idUsuario);
         }
     }
 }
